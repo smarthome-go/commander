@@ -1,0 +1,20 @@
+[Unit]
+Description=Microservice for executing shell commands via API requests (for user %i)
+After=network.target
+
+[Service]
+Type=simple
+User=%i
+
+# Environment variables
+Environment=ROCKET_PORT=7070
+Environment=ROCKET_PROFILE=production
+Environment=COMMANDER_SHELL=/bin/bash
+Environment=COMMANDER_TOKEN=test
+
+WorkingDirectory=/usr/bin/smarthome-hw/
+ExecStart=/usr/bin/commander
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target

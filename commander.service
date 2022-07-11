@@ -6,13 +6,20 @@ After=network.target
 Type=simple
 User=%i
 
-# Environment variables
+# Environment variables for the service
 Environment=ROCKET_PORT=7070
+Environment=ROCKET_ADDRESS=0.0.0.0
 Environment=ROCKET_PROFILE=production
 Environment=COMMANDER_SHELL=/bin/bash
 Environment=COMMANDER_TOKEN=test
 
-WorkingDirectory=/usr/bin/smarthome-hw/
+# Environment variables for the shell
+# You may have to include other environment variables (use the `env` command in your shell) for GUI or audio to work
+Environment=COLORTERM=truecolor
+Environment=DISPLAY=:0
+Environment=LANG=en_US.UTF-8
+
+
 ExecStart=/usr/bin/commander
 Restart=on-failure
 

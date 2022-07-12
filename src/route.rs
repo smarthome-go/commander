@@ -3,6 +3,7 @@ use crate::guards::HasApiKey;
 use crate::schema::ExecRequest;
 use async_process::Command;
 use rocket::{serde::json::Json, State};
+
 use serde::Serialize;
 use std::io;
 
@@ -34,9 +35,4 @@ pub async fn exec_handler(
         std_err: String::from_utf8(out.stderr).unwrap_or(String::from("invalid utf-8")),
         success: out.status.success(),
     }))
-}
-
-#[catch(500)]
-pub fn exec_handler_failure() -> &'static str {
-    "An unkown error occured during comand execution"
 }

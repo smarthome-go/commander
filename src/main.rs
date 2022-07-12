@@ -47,7 +47,6 @@ fn rocket() -> _ {
     println!("Commander v{VERSION} is starting...\nConfigured shell: `{shell}`");
 
     rocket::build()
-        .register("/exec", catchers![route::exec_handler_failure])
         .mount("/", routes![route::index_handler, route::exec_handler])
         .manage(Config { token, shell })
 }

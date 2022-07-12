@@ -17,7 +17,9 @@ Environment=COMMANDER_TOKEN=test
 # You may have to include other environment variables (use the `env` command in your shell) for GUI or audio to work
 Environment=COLORTERM=truecolor
 Environment=DISPLAY=:0
-Environment=LANG=en_US.UTF-8
+
+# Put user environment variables here
+# Example: Environment=LANG=en_US.UTF-8
 
 
 ExecStart=/usr/bin/commander

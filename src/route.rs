@@ -27,7 +27,7 @@ pub async fn exec_handler(
 ) -> Result<Json<CommandResponse>, io::Error> {
     let out = Command::new(&state.shell)
         .arg("-c")
-        .arg(&request.command)
+        .arg(request.command)
         .output()
         .await?;
 

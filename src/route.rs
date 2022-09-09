@@ -31,8 +31,8 @@ pub async fn exec_handler(
         .output()
         .await?;
     Ok(Json(CommandResponse {
-        std_out: String::from_utf8(out.stdout).unwrap_or(String::from("invalid utf-8")),
-        std_err: String::from_utf8(out.stderr).unwrap_or(String::from("invalid utf-8")),
+        std_out: String::from_utf8(out.stdout).unwrap_or_else(|_| String::from("invalid utf-8")),
+        std_err: String::from_utf8(out.stderr).unwrap_or_else(|_| String::from("invalid utf-8")),
         success: out.status.success(),
     }))
 }

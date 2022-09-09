@@ -1,6 +1,6 @@
-use serde::{Deserialize, Serialize};
+use serde::Deserialize;
 
-#[derive(FromForm, Deserialize, Serialize)]
-pub struct ExecRequest {
-    pub command: String,
+#[derive(FromForm, Deserialize)]
+pub struct ExecRequest<'request> {
+    pub command: &'request str,
 }

@@ -1,9 +1,9 @@
 # Commander
-Microservice for executing shell commands via API requests
+Microservice for executing commands via API requests
 
 ## Introduction
 Commander acts like a scripting interface to any Linux computer.
-The service is able to receive commands via its built-in API server and interprets them using the provided shell.
+The service is able to receive commands via its built-in API server in order to execute them.
 The main purpose of this software is to be used alongside Smarthome-server in order to allow Homescript to control remote computers.
 
 **Warning**: Even though access requires a token,  running commander comes at your own risk because it opens up a potent entrance for possible attackers to use.
@@ -68,7 +68,6 @@ The most important configuration parameters are explained below.
 | Parameter         | Explanation                                                       |
 |-------------------|-------------------------------------------------------------------|
 | `ROCKET_PORT`     | The port on which commander listens on                            |
-| `COMMANDER_SHELL` | The shell which commander uses to interpret the received commands |
 | `COMMANDER_TOKEN` | Unencrypted user authentication token                             |
 
 
@@ -76,7 +75,6 @@ Representation in the `.service` file (which is located at `/etc/systemd/system/
 ```bash
 # Environment variables for the service
 Environment=ROCKET_PORT=7070
-Environment=COMMANDER_SHELL=/bin/bash
 Environment=COMMANDER_TOKEN=test
 ```
 

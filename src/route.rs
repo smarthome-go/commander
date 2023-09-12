@@ -5,7 +5,6 @@ use async_process::Command;
 use rocket::{serde::json::Json, State};
 
 use serde::Serialize;
-use std::io;
 
 #[get("/")]
 pub fn index_handler() -> &'static str {
@@ -21,19 +20,27 @@ pub struct CommandResponse {
 
 #[post("/exec", format = "json", data = "<request>")]
 pub async fn exec_handler(
-    state: &State<Config>,
+    _state: &State<Config>,
     _key: HasApiKey,
-    request: Json<ExecRequest<'_>>,
-) -> Result<Json<CommandResponse>, io::Error> {
-    let out = Command::new(&state.shell)
-        .arg("-c")
-        .arg(request.command)
+    request: Json<ExecRequest>,
+) -> Json<CommandResponse> {
+    let out = Command::new(request.command.clone())
+        .args(request.args.clone())
         .output()
-        .await?;
+        .await;
 
-    Ok(Json(CommandResponse {
-        std_out: String::from_utf8(out.stdout).unwrap_or_else(|_| String::from("invalid utf-8")),
-        std_err: String::from_utf8(out.stderr).unwrap_or_else(|_| String::from("invalid utf-8")),
-        success: out.status.success(),
-    }))
+    match out {
+        Ok(out) => Json(CommandResponse {
+            std_out: String::from_utf8(out.stdout)
+                .unwrap_or_else(|_| String::from("invalid utf-8")),
+            std_err: String::from_utf8(out.stderr)
+                .unwrap_or_else(|_| String::from("invalid utf-8")),
+            success: out.status.success(),
+        }),
+        Err(err) => Json(CommandResponse {
+            std_out: String::new(),
+            std_err: err.to_string(),
+            success: false,
+        }),
+    }
 }

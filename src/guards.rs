@@ -22,9 +22,9 @@ impl<'r> FromRequest<'r> for HasApiKey {
         }
 
         match req.headers().get_one("token") {
-            None => Outcome::Failure((Status::Unauthorized, HasApiKeyError::Missing)),
+            None => Outcome::Error((Status::Unauthorized, HasApiKeyError::Missing)),
             Some(key) if is_valid(key, &config.token) => Outcome::Success(HasApiKey),
-            Some(_) => Outcome::Failure((Status::Unauthorized, HasApiKeyError::Invalid)),
+            Some(_) => Outcome::Error((Status::Unauthorized, HasApiKeyError::Invalid)),
         }
     }
 }

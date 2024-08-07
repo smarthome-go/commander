@@ -1,0 +1,28 @@
+[Unit]
+Description=Microservice for executing shell commands via API requests (for user %i)
+After=network.target
+
+[Service]
+Type=simple
+
+# Environment variables for the service
+Environment=ROCKET_PORT=7070
+Environment=ROCKET_ADDRESS=0.0.0.0
+Environment=ROCKET_PROFILE=production
+Environment=COMMANDER_SHELL=/usr/bin/env bash
+Environment=COMMANDER_TOKEN=test
+
+# Environment variables for the shell
+# You may have to include other environment variables (use the `env` command in your shell) for GUI or audio to work
+Environment=COLORTERM=truecolor
+Environment=DISPLAY=:0
+
+# Put user environment variables here
+# Example: Environment=LANG=en_US.UTF-8
+
+
+ExecStart=/usr/bin/commander
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
